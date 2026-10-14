@@ -54,7 +54,7 @@ ListView {
             showStatus: false
             changing: rescan.running
 
-            iconUrl: "../icons/rescan-wifi.svg"
+            iconUrl: Theme.controlPanelFontFamily != "Ttyp0 OTB" ? "../icons/rescan-wifi.svg" : ""
             iconSize: 10
 
             text: Theme.controlPanelFontFamily == "Ttyp0 OTB" ? " Rescan" : "Rescan"
