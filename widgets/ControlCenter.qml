@@ -8,10 +8,10 @@ import ".."
 PopupWindow {
     id: root
 
-    implicitWidth: 300
+    implicitWidth: 300 * Theme.controlPanelScale
     // Fits the buttons plus whichever list is open, up to a cap; past that the
     // list scrolls. The 16 covers the content's margins on both sides.
-    implicitHeight: Math.min(content.implicitHeight + 16, 600)
+    implicitHeight: Math.min(content.implicitHeight + 16 * Theme.controlPanelScale, 600 * Theme.controlPanelScale)
     
     visible: false
     color: "transparent"
@@ -71,8 +71,8 @@ PopupWindow {
             property string openList: "wifi"
 
             anchors.fill: parent
-            anchors.margins: 8
-            spacing: 6
+            anchors.margins: 8 * Theme.controlPanelScale
+            spacing: 6 * Theme.controlPanelScale
 
             Row {
                 Layout.fillWidth: true
@@ -115,6 +115,8 @@ PopupWindow {
                 text: "Wi-Fi"
                 color: Theme.muted
                 visible: wifiList.visible
+                font.pixelSize: Theme.controlPanelFontSize
+                font.family: Theme.controlPanelFontFamily
             }
 
             WifiList {
@@ -130,6 +132,8 @@ PopupWindow {
                 text: "Bluetooth"
                 color: Theme.muted
                 visible: bluetoothList.visible
+                font.pixelSize: Theme.controlPanelFontSize
+                font.family: Theme.controlPanelFontFamily
             }
 
             BluetoothList {

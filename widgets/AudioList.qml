@@ -1,3 +1,4 @@
+import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
 import QtQuick
@@ -81,11 +82,15 @@ Flickable {
             text: "Output"
             color: Theme.muted
             // The same gap below the heading as under "Wi-Fi" and "VPN".
-            bottomPadding: 6
+            bottomPadding: 6 * Theme.controlPanelScale
+            font.pixelSize: Theme.controlPanelFontSize
+            font.family: Theme.controlPanelFontFamily
         }
 
         Repeater {
-            model: root.outputs
+            model: ScriptModel {
+                values: root.outputs
+            }
 
             delegate: ListButton {
                 required property PwNode modelData
@@ -93,19 +98,32 @@ Flickable {
                 width: sections.width
                 text: root.label(modelData)
                 connected: modelData === Pipewire.defaultAudioSink
-                onClicked: Pipewire.preferredDefaultAudioSink = modelData
+                onClicked: {
+                    Pipewire.preferredDefaultAudioSink = modelData;
+                    Quickshell.execDetached([
+                        "nc",
+                        "-w",
+                        "1",
+                        "localhost",
+                        "15310",
+                    ]);
+                }
             }
         }
 
         BarText {
             text: "Input"
             color: Theme.muted
-            topPadding: 4
-            bottomPadding: 6
+            topPadding: 4 * Theme.controlPanelScale
+            bottomPadding: 6 * Theme.controlPanelScale
+            font.pixelSize: Theme.controlPanelFontSize
+            font.family: Theme.controlPanelFontFamily
         }
 
         Repeater {
-            model: root.inputs
+            model: ScriptModel {
+                values: root.inputs
+            }
 
             delegate: ListButton {
                 required property PwNode modelData
@@ -113,7 +131,16 @@ Flickable {
                 width: sections.width
                 text: root.label(modelData)
                 connected: modelData === Pipewire.defaultAudioSource
-                onClicked: Pipewire.preferredDefaultAudioSource = modelData
+                onClicked: {
+                    Pipewire.preferredDefaultAudioSource = modelData;
+                    Quickshell.execDetached([
+                        "nc",
+                        "-w",
+                        "1",
+                        "localhost",
+                        "15310",
+                    ]);
+                }
             }
         }
     }

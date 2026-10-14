@@ -1,3 +1,4 @@
+import Quickshell
 import Quickshell.Bluetooth
 import Quickshell.Io
 import QtQuick
@@ -18,10 +19,12 @@ ListView {
     clip: true
     spacing: 0
 
-    model: !adapter ? [] : Array.from(adapter.devices.values)
-        .sort((a, b) => (b.connected - a.connected)
-            || (b.paired - a.paired)
-            || a.name.localeCompare(b.name))
+    model: ScriptModel {
+        values: !adapter ? [] : Array.from(adapter.devices.values)
+            .sort((a, b) => (b.connected - a.connected)
+                || (b.paired - a.paired)
+                || a.name.localeCompare(b.name))
+    }
 
     delegate: ListButton {
         id: entry

@@ -56,7 +56,9 @@ Column {
     }
 
     Repeater {
-        model: root.vpns
+        model: ScriptModel {
+            values: root.vpns
+        }
 
         delegate: ListButton {
             required property var modelData

@@ -1,5 +1,5 @@
 import QtQuick
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 import ".."
 
 // A button that shows whether something is on, highlighted while it is.
@@ -13,8 +13,8 @@ Rectangle {
 
     signal toggled()
 
-    width: 40
-    height: 40
+    width: 40 * Theme.controlPanelScale
+    height: 40 * Theme.controlPanelScale
     color: mouse.containsMouse ? "#4A3453"
          : checked ? Theme.workspaceActiveBackground
          : "transparent"
@@ -25,15 +25,9 @@ Rectangle {
         id: icon
         anchors.centerIn: parent
         source: root.checked ? root.iconOn : root.iconOff
-        sourceSize: Qt.size(20, 20)
+        sourceSize: Qt.size(20 * Theme.controlPanelScale, 20 * Theme.controlPanelScale)
         // Drawn by the overlay below instead, recoloured to match the theme.
-        visible: false
-    }
-
-    ColorOverlay {
-        anchors.fill: icon
-        source: icon
-        color: root.checked ? Theme.workspaceActiveForeground : Theme.muted
+        visible: true
     }
 
     MouseArea {

@@ -1,3 +1,4 @@
+import Quickshell
 import Quickshell.Io
 import Quickshell.Networking
 import QtQuick
@@ -15,23 +16,48 @@ ListView {
     clip: true
     spacing: 0
 
-    model: !wifi ? [] : Array.from(wifi.networks.values)
-        .sort((a, b) => (b.stateChanging - a.stateChanging)
-            || (b.connected - a.connected)
-            || (b.signalStrength - a.signalStrength))
+    model: ScriptModel {
+        values: {
+            if (!wifi) {
+                return wifi;
+            }
+
+            const networks = Array.from(wifi.networks.values)
+
+            const sortFn = (a, b) => {
+                if (b.stateChanging - a.stateChanging) {
+                    return b.stateChanging - a.stateChanging;
+                } else if (b.connected - a.connected) {
+                    return b.connected - a.connected;
+                } else if (a.name == "wifi" || b.name == "wifi") {
+                    return a.name == "wifi" ? -1 : 1;
+                } else if (a.name == "bad wifi" || b.name == "bad wifi") {
+                    return a.name == "bad wifi" ? -1 : 1;
+                } else {
+                    return b.signalStrength - a.signalStrength;
+                }
+            };
+
+            return networks.sort(sortFn);
+        }
+    }
 
     // A rescan button right after the networks, then the VPNs under their own
     // heading. All of it scrolls along with the networks.
     footer: Column {
         width: root.width
-        topPadding: 8
-        spacing: 6
+        topPadding: 8 * Theme.controlPanelScale
+        spacing: 6 * Theme.controlPanelScale
 
         ListButton {
             width: parent.width
             showStatus: false
             changing: rescan.running
-            text: " Rescan"
+
+            iconUrl: "../icons/rescan-wifi.svg"
+            iconSize: 10
+
+            text: Theme.controlPanelFontFamily == "Ttyp0 OTB" ? " Rescan" : "Rescan"
             textColor: Theme.foreground
             onClicked: rescan.running = true
 
@@ -46,6 +72,8 @@ ListView {
         BarText {
             text: "VPN"
             color: Theme.muted
+            font.pixelSize: Theme.controlPanelFontSize
+            font.family: Theme.controlPanelFontFamily
         }
 
         VpnList {

@@ -23,6 +23,7 @@ ListButton {
         BarText {
             anchors.centerIn: parent
             text: ""
+            font.pixelSize: Theme.sftpButtonFontSize
         }
 
         MouseArea {

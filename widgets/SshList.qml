@@ -67,12 +67,14 @@ Flickable {
             text: "LAN"
             color: Theme.muted
             // The same gap below the heading as under "Wi-Fi" and "VPN".
-            bottomPadding: 6
+            bottomPadding: 6 * Theme.controlPanelScale
             visible: root.lanConnected
         }
 
         Repeater {
-            model: root.lanConnected ? root.lanHosts : []
+            model: ScriptModel {
+                values: root.lanConnected ? root.lanHosts : []
+            }
 
             delegate: SshHostButton {
                 required property var modelData
@@ -88,12 +90,16 @@ Flickable {
             text: "WAN"
             color: Theme.muted
             // Space between the sections when LAN is shown above.
-            topPadding: root.lanConnected ? 4 : 0
-            bottomPadding: 6
+            topPadding: root.lanConnected ? 4 * Theme.controlPanelScale : 0
+            bottomPadding: 6 * Theme.controlPanelScale
+            font.pixelSize: Theme.controlPanelFontSize
+            font.family: Theme.controlPanelFontFamily
         }
 
         Repeater {
-            model: root.wanHosts
+            model: ScriptModel {
+                values: root.wanHosts
+            }
 
             delegate: SshHostButton {
                 required property var modelData

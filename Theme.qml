@@ -3,6 +3,8 @@ pragma Singleton
 import Quickshell
 import QtQuick
 
+import "./Client"
+
 Singleton {
     readonly property color background: "#1E121E"
     readonly property color border: "#38263F"
@@ -20,12 +22,18 @@ Singleton {
 
     readonly property color workspaceActiveBackground: "#322238"
     readonly property color workspaceActiveForeground: "#B7ACB7"
-    readonly property int workspaceExtraWidth: 12
 
-    readonly property int barHeight: 26
-    readonly property int padding: 0
-    readonly property int spacing: 10
+    readonly property int workspaceExtraWidth: Client.workspaceExtraWidth
 
-    readonly property string fontFamily: "Ttyp0 OTB"
-    readonly property int fontSize: 14
+    readonly property int barHeight: Client.barHeight
+    readonly property int padding: Client.padding
+    readonly property int spacing: Client.spacing
+
+    readonly property string fontFamily: Client.fontFamily
+    readonly property int fontSize: Client.fontSize
+
+    readonly property string controlPanelFontFamily: Client.controlPanelFontFamily
+    readonly property int controlPanelFontSize: Client.controlPanelFontSize
+    readonly property real controlPanelScale: Client.controlPanelScale
+    readonly property int sftpButtonFontSize: Client.sftpButtonFontSize
 }
