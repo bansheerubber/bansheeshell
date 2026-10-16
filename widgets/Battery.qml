@@ -40,7 +40,11 @@ RowLayout {
         anchor.margins.right: -22
         implicitWidth: Math.round(tooltipText.implicitWidth + 50)
         height: 40
-        visible: (battery.state !== UPowerDeviceState.FullyCharged && (battery.timeToFull !== 0 ^ battery.timeToEmpty !== 0)) && mouseArea.containsMouse
+        visible: (
+            battery.state !== UPowerDeviceState.FullyCharged
+            && (battery.timeToFull !== 0 ^ battery.timeToEmpty !== 0)
+            && Math.abs(battery.changeRate) > 1
+        ) && mouseArea.containsMouse
 
         Rectangle {
             anchors.fill: parent
@@ -78,8 +82,6 @@ RowLayout {
                             return `${minutes} ${pluralMinutes} until empty (${changeRate})`;
                         }
                     }
-
-                    return "Battery";
                 }
             }
         }

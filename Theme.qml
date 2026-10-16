@@ -36,5 +36,5 @@ Singleton {
     readonly property real controlPanelScale: Client.controlPanelScale
     readonly property int sftpButtonFontSize: Client.sftpButtonFontSize
 
-    readonly property string clockSuffix: Client.clockSuffix
+    readonly property string clockSuffix: Client.clockSuffix || ""
 }
