@@ -56,10 +56,6 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
         spacing: Theme.spacing
 
-        BarText {
-            text: "☰"
-        }
-
         Volume {}
 
         PolybarWatcher {
@@ -68,6 +64,11 @@ PanelWindow {
         }
 
         Battery {}
+
+        BarText {
+            text: "☰"
+            rightPadding: 8
+        }
     }
 
     MouseArea {

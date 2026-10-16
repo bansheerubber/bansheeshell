@@ -23,9 +23,8 @@ RowLayout {
             anchors.bottomMargin: -4
             anchors.topMargin: -8
             anchors.leftMargin: -10
+            anchors.rightMargin: -50
         }
- 
-        rightPadding: 4
 
         visible: battery.ready && battery.isLaptopBattery
         text: `${changeRate}${Math.round(battery.percentage * 100)}%`
@@ -38,6 +37,7 @@ RowLayout {
         anchor.edges: Edges.Bottom | Edges.Right
         anchor.gravity: Edges.Bottom | Edges.Left
         anchor.margins.bottom: -5
+        anchor.margins.right: -22
         implicitWidth: Math.round(tooltipText.implicitWidth + 50)
         height: 40
         visible: (battery.state !== UPowerDeviceState.FullyCharged && (battery.timeToFull !== 0 ^ battery.timeToEmpty !== 0)) && mouseArea.containsMouse
