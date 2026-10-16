@@ -27,7 +27,8 @@ Singleton {
 
         const id = persistentState.data.current.weather[0].id;
         const highClouds = persistentState.data.current.clouds;
-        const isDay = true;
+        const hour = (new Date()).getHours();
+        const isDay = hour >= 4 && hour <= 19;
 
         if (200 <= id && id <= 202) {
             if (highClouds) {
