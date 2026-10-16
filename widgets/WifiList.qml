@@ -29,10 +29,10 @@ ListView {
                     return b.stateChanging - a.stateChanging;
                 } else if (b.connected - a.connected) {
                     return b.connected - a.connected;
-                } else if (a.name == "wifi" || b.name == "wifi") {
-                    return a.name == "wifi" ? -1 : 1;
-                } else if (a.name == "bad wifi" || b.name == "bad wifi") {
-                    return a.name == "bad wifi" ? -1 : 1;
+                } else if (a.known && !b.known) {
+                    return -1;
+                } else if (!a.known && b.known) {
+                    return 1;
                 } else {
                     return b.signalStrength - a.signalStrength;
                 }
