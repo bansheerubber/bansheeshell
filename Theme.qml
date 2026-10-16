@@ -11,18 +11,16 @@ Singleton {
     readonly property color foreground: "#B7ACB7"
     readonly property color foregroundBold: "#E9D9E9"
     readonly property color muted: "#7C747C"
-    readonly property color accent: "#89b4fa"
 
     readonly property color hoverBackground: "#322238"
     readonly property color activeBackground: "#38263F"
-    readonly property color urgent: "#f38ba8"
+    readonly property color urgent: "#BD2C40"
 
     readonly property color connected: "#39eF7C"
     readonly property color connecting: "#FFEE53"
     readonly property color notConnected: "#583C63"
 
     readonly property color workspaceActiveBackground: "#322238"
-    readonly property color workspaceActiveForeground: "#B7ACB7"
 
     readonly property int workspaceExtraWidth: Client.workspaceExtraWidth
 

@@ -6,6 +6,10 @@ import "widgets"
 PanelWindow {
     id: bar
 
+    surfaceFormat {
+        opaque: false
+    }
+
     anchors {
         top: true
         left: true
@@ -44,20 +48,6 @@ PanelWindow {
         anchor.item: rightSideClick
     }
 
-    // Clicking anywhere on the right side opens the control center, and clicking
-    // again closes it. Declared before the row so it sits underneath: widgets
-    // with their own click handling, like Volume, still get their clicks.
-    // It spans the bar's full height, not just the row's, which is only as tall
-    // as its text.
-    MouseArea {
-        id: rightSideClick
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.left: rightSide.left
-        anchors.right: rightSide.right
-        onClicked: controlCenter.toggle()
-    }
-
     // Right side
     RowLayout {
         id: rightSide
@@ -65,6 +55,10 @@ PanelWindow {
         anchors.rightMargin: Theme.padding
         anchors.verticalCenter: parent.verticalCenter
         spacing: Theme.spacing
+
+        BarText {
+            text: "☰"
+        }
 
         Volume {}
 
@@ -74,5 +68,15 @@ PanelWindow {
         }
 
         Battery {}
+    }
+
+    MouseArea {
+        id: rightSideClick
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: rightSide.left
+        anchors.right: rightSide.right
+        anchors.leftMargin: -50
+        onClicked: controlCenter.toggle()
     }
 }
