@@ -156,9 +156,26 @@ Singleton {
             onStreamFinished: {
                 console.log("Weather fetched");
 
+                if (fetchTimer.interval !== 600 * 1000) {
+                    fetchTimer.interval = 600 * 1000;
+                    fetchTimer.restart();
+                }
+
                 try {
-                    persistentState.data = JSON.parse(this.text);
+                    const data = JSON.parse(this.text);
+
+                    if (data.cod != null && data.cod != 200) {
+                        persistentState.data = undefined; // error from the API
+                    } else {
+                        persistentState.data = data;
+                    }
                 } catch (error) {
+                    // probably not connected to the internet
+                    if (this.text === "") {
+                        fetchTimer.interval = 10 * 1000; // try again in 10 seconds
+                        fetchTimer.restart();
+                    }
+
                     console.error("Failed to fetch", this.text);
                 }
             }
@@ -166,12 +183,14 @@ Singleton {
     }
 
     Timer {
+        id: fetchTimer
+
         interval: 600 * 1000
         running: true
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            if (Date.now() / 1000 - persistentState.lastFetch < 600) {
+            if (Date.now() / 1000 - persistentState.lastFetch < fetchTimer.interval / 1000) {
                 return;
             }
 
