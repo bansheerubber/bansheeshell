@@ -19,7 +19,7 @@ ListView {
     model: ScriptModel {
         values: {
             if (!wifi) {
-                return wifi;
+                return [];
             }
 
             const networks = Array.from(wifi.networks.values)
@@ -38,8 +38,18 @@ ListView {
                 }
             };
 
-            return networks.sort(sortFn);
+            return networks.sort(sortFn).filter(Boolean);
         }
+    }
+
+    header: BarText {
+        bottomPadding: 6 * Theme.controlPanelScale
+
+        text: "Wi-Fi"
+        color: Theme.muted
+        visible: wifiList.visible
+        font.pixelSize: Theme.controlPanelFontSize
+        font.family: Theme.controlPanelFontFamily
     }
 
     // A rescan button right after the networks, then the VPNs under their own

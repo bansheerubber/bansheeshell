@@ -6,34 +6,27 @@ import ".."
 Rectangle {
     id: root
 
-    // Icon shown while on and while off.
-    property url iconOn
-    property url iconOff
-    property bool checked: false
+    property url icon
 
-    signal toggled()
+    signal clicked()
 
     width: 40 * Theme.controlPanelScale
     height: 40 * Theme.controlPanelScale
-    color: mouse.containsMouse ? "#4A3453"
-         : checked ? Theme.workspaceActiveBackground
-         : "transparent"
+    color: mouse.containsMouse ? "#4A3453" : Theme.workspaceActiveBackground
 
     opacity: enabled ? 1 : 0.5
 
     Image {
         id: icon
         anchors.centerIn: parent
-        source: root.checked ? root.iconOn : root.iconOff
+        source: root.icon
         sourceSize: Qt.size(20 * Theme.controlPanelScale, 20 * Theme.controlPanelScale)
-        // Drawn by the overlay below instead, recoloured to match the theme.
-        visible: true
     }
 
     MouseArea {
         id: mouse
         anchors.fill: parent
         hoverEnabled: true
-        onClicked: root.toggled()
+        onClicked: root.clicked()
     }
 }

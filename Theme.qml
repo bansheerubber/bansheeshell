@@ -3,12 +3,13 @@ pragma Singleton
 import Quickshell
 import QtQuick
 
-import "./Client"
+import "./Client.qml"
 
 Singleton {
     readonly property color background: "#1E121E"
     readonly property color border: "#38263F"
     readonly property color foreground: "#B7ACB7"
+    readonly property color foregroundBold: "#E9D9E9"
     readonly property color muted: "#7C747C"
     readonly property color accent: "#89b4fa"
 

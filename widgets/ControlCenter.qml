@@ -74,49 +74,8 @@ PopupWindow {
             anchors.margins: 8 * Theme.controlPanelScale
             spacing: 6 * Theme.controlPanelScale
 
-            Row {
-                Layout.fillWidth: true
-                spacing: 6
-
-                ToggleButton {
-                    iconOn: "../icons/wifi-on.svg"
-                    // Opens the Wi-Fi list. Always drawn in the "on" style, so it
-                    // looks the same whether the list is open or not.
-                    checked: true
-                    onToggled: content.openList = "wifi"
-                }
-
-                ToggleButton {
-                    iconOn: "../icons/bluetooth-on.svg"
-                    // Opens the Bluetooth list, drawn the same either way like the
-                    // Wi-Fi button.
-                    checked: true
-                    onToggled: content.openList = "bluetooth"
-                }
-
-                ToggleButton {
-                    iconOn: "../icons/audio.svg"
-                    // Opens the audio device list, drawn the same either way like
-                    // the other buttons.
-                    checked: true
-                    onToggled: content.openList = "audio"
-                }
-
-                ToggleButton {
-                    iconOn: "../icons/ssh.svg"
-                    // Opens the SSH list, drawn the same either way like the
-                    // other buttons.
-                    checked: true
-                    onToggled: content.openList = "ssh"
-                }
-            }
-
-            BarText {
-                text: "Wi-Fi"
-                color: Theme.muted
-                visible: wifiList.visible
-                font.pixelSize: Theme.controlPanelFontSize
-                font.family: Theme.controlPanelFontFamily
+            ControlCenterTopRow {
+                onWeatherOpened: root.visible = false
             }
 
             WifiList {
@@ -126,14 +85,6 @@ PopupWindow {
                 // Asks for its full height, but shrinks to fit when the popup is capped.
                 Layout.preferredHeight: contentHeight
                 Layout.fillHeight: true
-            }
-
-            BarText {
-                text: "Bluetooth"
-                color: Theme.muted
-                visible: bluetoothList.visible
-                font.pixelSize: Theme.controlPanelFontSize
-                font.family: Theme.controlPanelFontFamily
             }
 
             BluetoothList {

@@ -25,6 +25,16 @@ ListView {
                 || (b.paired - a.paired)
                 || a.name.localeCompare(b.name))
     }
+    
+    header: BarText {
+        bottomPadding: 6 * Theme.controlPanelScale
+
+        text: "Bluetooth"
+        color: Theme.muted
+        visible: bluetoothList.visible
+        font.pixelSize: Theme.controlPanelFontSize
+        font.family: Theme.controlPanelFontFamily
+    }
 
     delegate: ListButton {
         id: entry

@@ -7,7 +7,7 @@ Rectangle {
     id: root
 
     property string text: ""
-    property string iconUrl: ""
+    property url iconUrl: ""
     property real iconSize: 0
 
     property int pixelSize: Theme.controlPanelFontSize
