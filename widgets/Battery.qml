@@ -70,7 +70,7 @@ RowLayout {
                             return `${minutes} ${pluralMinutes} until charged`;
                         }
                     } else {
-                        const changeRate = `-${Math.round(battery.changeRate)}W`
+                        const changeRate = `-${battery.changeRate.toFixed(1)}W`
 
                         if (hours !== 0) {
                             return `${hours} hours and ${minutes} ${pluralMinutes} until empty (${changeRate})`;
