@@ -14,15 +14,4 @@ BarText {
     PwObjectTracker {
         objects: [Pipewire.defaultAudioSink]
     }
-
-    // Scrolling changes the volume. Clicks are not taken, so they fall through to
-    // the bar underneath, which opens the control center.
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.NoButton
-        onWheel: wheel => {
-            const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05;
-            parent.sink.audio.volume = Math.max(0, Math.min(1, parent.sink.audio.volume + step));
-        }
-    }
 }
