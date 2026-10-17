@@ -2,6 +2,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
 import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import ".."
 
 // Audio devices in two sections, outputs then inputs. The dot and highlight
@@ -14,6 +16,19 @@ Flickable {
     // or recording, and nodes without audio are things like cameras.
     readonly property var devices: Pipewire.nodes.values
         .filter(node => node.audio && !node.isStream && !unavailable.includes(node.name))
+
+    readonly property PwNode sink: Pipewire.defaultAudioSink
+
+    PwObjectTracker {
+        objects: [Pipewire.defaultAudioSink]
+    }
+
+    readonly property PwNode source: Pipewire.defaultAudioSource
+
+    PwObjectTracker {
+        objects: [Pipewire.defaultAudioSource]
+    }
+
     readonly property var outputs: devices.filter(node => node.isSink)
     readonly property var inputs: devices.filter(node => !node.isSink)
 
@@ -73,18 +88,28 @@ Flickable {
     contentHeight: sections.implicitHeight
     boundsBehavior: Flickable.StopAtBounds
 
-    Column {
+    ColumnLayout {
         id: sections
         width: root.width
         spacing: 0
 
-        BarText {
-            text: "Output"
-            color: Theme.muted
-            // The same gap below the heading as under "Wi-Fi" and "VPN".
-            bottomPadding: 6 * Theme.controlPanelScale
-            font.pixelSize: Theme.controlPanelFontSize
-            font.family: Theme.controlPanelFontFamily
+        RowLayout {
+            spacing: 10 * Theme.controlPanelScale
+            width: root.width
+            Layout.bottomMargin: 6 * Theme.controlPanelScale
+
+            BarText {
+                text: "Output"
+                Layout.preferredWidth: Math.floor(parent.width * 0.15 * Theme.controlPanelScale)
+                color: Theme.muted
+                font.pixelSize: Theme.controlPanelFontSize
+                font.family: Theme.controlPanelFontFamily
+            }
+
+            ControlCenterSlider {
+                value: sink && sink.audio ? sink.audio.volume : 0
+                onChange: (percent) => sink.audio.volume = percent
+            }
         }
 
         Repeater {
@@ -94,6 +119,8 @@ Flickable {
 
             delegate: ListButton {
                 required property PwNode modelData
+
+                Layout.fillWidth: true
 
                 width: sections.width
                 text: root.label(modelData)
@@ -111,13 +138,24 @@ Flickable {
             }
         }
 
-        BarText {
-            text: "Input"
-            color: Theme.muted
-            topPadding: 4 * Theme.controlPanelScale
-            bottomPadding: 6 * Theme.controlPanelScale
-            font.pixelSize: Theme.controlPanelFontSize
-            font.family: Theme.controlPanelFontFamily
+        RowLayout {
+            spacing: 10 * Theme.controlPanelScale
+            width: root.width
+            Layout.topMargin: 10 * Theme.controlPanelScale
+            Layout.bottomMargin: 6 * Theme.controlPanelScale
+
+            BarText {
+                text: "Input"
+                Layout.preferredWidth: Math.floor(parent.width * 0.15 * Theme.controlPanelScale)
+                color: Theme.muted
+                font.pixelSize: Theme.controlPanelFontSize
+                font.family: Theme.controlPanelFontFamily
+            }
+
+            ControlCenterSlider {
+                value: source && source.audio ? source.audio.volume : 0
+                onChange: (percent) => source.audio.volume = percent
+            }
         }
 
         Repeater {
@@ -127,6 +165,8 @@ Flickable {
 
             delegate: ListButton {
                 required property PwNode modelData
+
+                Layout.fillWidth: true
 
                 width: sections.width
                 text: root.label(modelData)
