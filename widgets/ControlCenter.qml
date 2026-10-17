@@ -16,30 +16,18 @@ PopupWindow {
     visible: false
     color: "transparent"
 
-    // Takes a pointer grab while open, so the compositor closes the popup when
-    // you click anywhere outside it.
     grabFocus: true
 
-    // When the popup was last closed, in milliseconds.
-    property double closedAt: 0
-
-    // Switch back to the Wi-Fi list on closing, so it is already showing the next
-    // time the popup opens.
     onVisibleChanged: {
         if (!visible) {
-            closedAt = Date.now();
             content.openList = "wifi";
         }
     }
 
-    // Opens or closes the popup. Clicking the clock while the popup is open
-    // counts as a click outside it, so the compositor closes it first and the
-    // clock's click then arrives straight after. Ignoring opens that come right
-    // after a close stops that click from reopening it.
     function toggle() {
         if (visible) {
             visible = false;
-        } else if (Date.now() - closedAt > 300) {
+        } else {
             visible = true;
         }
     }

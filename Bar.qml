@@ -15,6 +15,7 @@ PanelWindow {
         left: true
         right: true
     }
+
     implicitHeight: Theme.barHeight
     color: Theme.background
 
@@ -69,6 +70,11 @@ PanelWindow {
             text: "☰"
             rightPadding: 8
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: controlCenter.visible = false
     }
 
     MouseArea {
