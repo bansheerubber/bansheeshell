@@ -29,8 +29,13 @@ Flickable {
         objects: [Pipewire.defaultAudioSource]
     }
 
-    readonly property var outputs: devices.filter(node => node.isSink)
-    readonly property var inputs: devices.filter(node => !node.isSink)
+    readonly property var outputs: devices
+        .filter(node => node.isSink)
+        .sort((a, b) => root.label(a).toLocaleLowerCase().localeCompare(root.label(b).toLocaleLowerCase()))
+        
+    readonly property var inputs: devices
+        .filter(node => !node.isSink)
+        .sort((a, b) => root.label(a).toLocaleLowerCase().localeCompare(root.label(b).toLocaleLowerCase()))
 
     function label(node) {
         return node.description || node.nickname || node.name;
