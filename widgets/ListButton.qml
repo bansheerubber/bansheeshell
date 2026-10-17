@@ -41,7 +41,7 @@ Rectangle {
         Rectangle {
             id: buttonStatus
 
-            visible: root.showStatus
+            visible: root.showStatus && (root.connected || root.changing)
             anchors.verticalCenter: parent.verticalCenter
             width: 8 * Theme.controlPanelScale
             height: 8 * Theme.controlPanelScale
