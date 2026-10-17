@@ -31,6 +31,7 @@ ListButton {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: root.filesClicked()
+            cursorShape: Qt.PointingHandCursor
         }
     }
 }

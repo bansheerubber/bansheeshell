@@ -77,7 +77,8 @@ PanelWindow {
         anchors.bottom: parent.bottom
         anchors.left: rightSide.left
         anchors.right: rightSide.right
-        anchors.leftMargin: -50
+        anchors.leftMargin: -10
         onClicked: controlCenter.toggle()
+        cursorShape: Qt.PointingHandCursor
     }
 }

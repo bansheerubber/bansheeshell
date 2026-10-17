@@ -37,13 +37,16 @@ RowLayout {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
+    TapHandler {
+        onTapped: {
             Qt.openUrlExternally("https://www.google.com/search?q=seattle+weather")
             focusChrome.running = true;
             openedInBrowser();
         }
+    }
+
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
     }
 
     Process {

@@ -53,4 +53,8 @@ Slider {
 
         radius: width
     }
+
+    HoverHandler {
+        cursorShape: slider.pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
+    }
 }

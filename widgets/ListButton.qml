@@ -79,5 +79,6 @@ Rectangle {
         hoverEnabled: true
         enabled: !root.changing
         onClicked: root.clicked()
+        cursorShape: Qt.PointingHandCursor
     }
 }
