@@ -8,7 +8,6 @@ Slider {
     id: slider
 
     Layout.fillWidth: true
-    anchors.verticalCenter: parent.verticalCenter
 
     from: 0.0
     to: 1.0
@@ -24,10 +23,8 @@ Slider {
 
         y: slider.availableHeight / 2 - height / 2
 
-        implicitWidth: slider.availableWidth - 2
-        implicitHeight: 4 * Theme.controlPanelScale
         width: slider.availableWidth - 2
-        height: implicitHeight
+        height: 4 * Theme.controlPanelScale
 
         color: "#38263F"
 

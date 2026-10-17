@@ -39,7 +39,8 @@ RowLayout {
         anchor.margins.bottom: -5
         anchor.margins.right: -22
         implicitWidth: Math.round(tooltipText.implicitWidth + 50)
-        height: 40
+        implicitHeight: 40
+
         visible: (
             battery.state !== UPowerDeviceState.FullyCharged
             && (battery.timeToFull !== 0 ^ battery.timeToEmpty !== 0)

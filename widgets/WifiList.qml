@@ -104,9 +104,9 @@ ListView {
         required property WifiNetwork modelData
 
         width: ListView.view.width
-        text: modelData.name || "Hidden network"
-        connected: modelData.connected
-        changing: modelData.stateChanging
-        onClicked: modelData.connected ? modelData.disconnect() : modelData.connect()
+        text: (modelData && modelData.name) || "Hidden network"
+        connected: (modelData && modelData.connected)
+        changing: (modelData && modelData.stateChanging)
+        onClicked: (modelData && modelData.connected) ? modelData.disconnect() : modelData.connect()
     }
 }

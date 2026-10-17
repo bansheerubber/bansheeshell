@@ -7,6 +7,8 @@ import ".."
 RowLayout {
     id: weather
 
+    anchors.leftMargin: 50
+
     spacing: 3 * Theme.controlPanelScale
 
     visible: WeatherFetcher.icon != ""
@@ -14,7 +16,7 @@ RowLayout {
     signal openedInBrowser()
 
     Image {
-        source: `../icons/weather/${WeatherFetcher.icon}.svg`
+        source: WeatherFetcher.icon ? `../icons/weather/${WeatherFetcher.icon}.svg` : ''
         sourceSize: Qt.size(80 * Theme.controlPanelScale, 80 * Theme.controlPanelScale)
     }
 
