@@ -20,6 +20,25 @@ Flickable {
     readonly property var lanHosts: hosts.filter(h => h.address.startsWith("10.0.0."))
     readonly property var wanHosts: hosts.filter(h => h.address.startsWith("10.1."))
 
+    readonly property var hostsFilter: [
+        "bansheeair",
+        "bansheebox",
+        "bansheedesk",
+        "bansheeipusb",
+        "bansheelittle",
+        "bansheerubber",
+        "bansheerubber-alt",
+        "bansheestation",
+        "bansheestation-alt",
+        "bansheestorage",
+        "bansheestorage-alt",
+        "bansheetelevision",
+        "gitkraken",
+        "gitkraken-alt",
+        "pidp11",
+        "remarkable",
+    ]
+
     // Opens a terminal with an SSH session to the host. niri spawns it, so the
     // terminal belongs to the session rather than to the bar. When the SSH
     // session ends, the terminal carries on with a local shell instead of
@@ -54,7 +73,9 @@ Flickable {
             root.hosts = text().split("\n")
                 .map(line => line.replace(/#.*/, "").trim().split(/\s+/))
                 .filter(fields => fields.length >= 2)
-                .map(fields => ({ address: fields[0], name: fields[1] }));
+                .map(fields => ({ address: fields[0], name: fields[1] }))
+                .filter(({ name }) => hostsFilter.includes(name))
+                .sort((a, b) => a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase()));
         }
     }
 
