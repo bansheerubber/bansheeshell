@@ -33,6 +33,10 @@ ListView {
                     return -1;
                 } else if (!a.known && b.known) {
                     return 1;
+                } else if (a.security == WifiSecurityType.Open && !b.security != WifiSecurityType.Open) {
+                    return -1;
+                } else if (a.security != WifiSecurityType.Open && b.security == WifiSecurityType.Open) {
+                    return 1;
                 } else {
                     return b.signalStrength - a.signalStrength;
                 }
@@ -103,8 +107,36 @@ ListView {
     delegate: ListButton {
         required property WifiNetwork modelData
 
+        iconUrl: {
+            if (Theme.controlPanelFontFamily == "Ttyp0 OTB" || !modelData || modelData.connected) {
+                return "";
+            }
+
+            if (modelData.security == WifiSecurityType.Open) {
+                return "../icons/wifi-password-empty.svg";
+            } else {
+                return "../icons/wifi-password.svg";
+            }
+        }
+
+        iconSize: 10
+
         width: ListView.view.width
-        text: (modelData && modelData.name) || "Hidden network"
+        text: {
+            if (!modelData) {
+                return "";
+            }
+
+            if (Theme.controlPanelFontFamily != "Ttyp0 OTB" || modelData.connected) {
+                return modelData.name;
+            }
+
+            if (modelData.security == WifiSecurityType.Open) {
+                return `  ${modelData.name}`;
+            } else {
+                return ` ${modelData.name}`;
+            }
+        }
         connected: (modelData && modelData.connected)
         changing: (modelData && modelData.stateChanging)
         onClicked: (modelData && modelData.connected) ? modelData.disconnect() : modelData.connect()
