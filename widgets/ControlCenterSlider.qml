@@ -15,7 +15,8 @@ Slider {
     signal change(real percent);
 
     onMoved: {
-        change(slider.visualPosition);
+        const percent = Math.floor(slider.visualPosition * 100) / 100;
+        change(percent);
     }
 
     background: Rectangle {
