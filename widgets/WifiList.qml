@@ -16,6 +16,17 @@ ListView {
     clip: true
     spacing: 0
 
+    function hasNetworkHadSuccessfulConnection(modelData) {
+        for (let i = 0; i < modelData.nmSettings.length; i++) {
+            const settings = modelData.nmSettings[i].read();
+            if (settings?.connection?.timestamp) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     model: ScriptModel {
         values: {
             if (!wifi) {
@@ -112,7 +123,9 @@ ListView {
                 return "";
             }
 
-            if (modelData.security == WifiSecurityType.Open) {
+            if (root.hasNetworkHadSuccessfulConnection(modelData)) {
+                return "../icons/wifi-has-password.svg";
+            } else if (modelData.security == WifiSecurityType.Open) {
                 return "../icons/wifi-password-empty.svg";
             } else {
                 return "../icons/wifi-password.svg";
@@ -131,7 +144,9 @@ ListView {
                 return modelData.name;
             }
 
-            if (modelData.security == WifiSecurityType.Open) {
+            if (root.hasNetworkHadSuccessfulConnection(modelData)) {
+                return `U ${modelData.name}`;
+            } else if (modelData.security == WifiSecurityType.Open) {
                 return `  ${modelData.name}`;
             } else {
                 return ` ${modelData.name}`;
