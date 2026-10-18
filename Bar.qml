@@ -64,7 +64,9 @@ PanelWindow {
             command: "python /home/me/.local/scripts/audio.py get-sink-source"
         }
 
-        Battery {}
+        Battery {
+            hideTooltip: controlCenter.visible
+        }
 
         BarText {
             text: "☰"

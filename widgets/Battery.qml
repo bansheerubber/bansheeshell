@@ -13,6 +13,8 @@ RowLayout {
 
     readonly property string changeRate: battery.state === UPowerDeviceState.Charging && battery.changeRate > 1 ? `+${Math.round(battery.changeRate)}W ` : ''
 
+    property bool hideTooltip: false
+
     BarText {
         id: batteryText
 
@@ -45,7 +47,7 @@ RowLayout {
             battery.state !== UPowerDeviceState.FullyCharged
             && (battery.timeToFull !== 0 ^ battery.timeToEmpty !== 0)
             && Math.abs(battery.changeRate) > 1
-        ) && mouseArea.containsMouse
+        ) && mouseArea.containsMouse && !root.hideTooltip
 
         Rectangle {
             anchors.fill: parent
