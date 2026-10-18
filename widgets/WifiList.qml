@@ -118,6 +118,20 @@ ListView {
     delegate: ListButton {
         required property WifiNetwork modelData
 
+        textIcon: {
+            if (!modelData || Theme.controlPanelFontFamily != "Ttyp0 OTB" || modelData.connected) {
+                return "";
+            }
+
+            if (root.hasNetworkHadSuccessfulConnection(modelData)) {
+                return "U";
+            } else if (modelData.security == WifiSecurityType.Open) {
+                return " ";
+            } else {
+                return "";
+            }
+        }
+
         iconUrl: {
             if (Theme.controlPanelFontFamily == "Ttyp0 OTB" || !modelData || modelData.connected) {
                 return "";
@@ -133,25 +147,10 @@ ListView {
         }
 
         iconSize: 10
+        iconSpacing: 6
 
         width: ListView.view.width
-        text: {
-            if (!modelData) {
-                return "";
-            }
-
-            if (Theme.controlPanelFontFamily != "Ttyp0 OTB" || modelData.connected) {
-                return modelData.name;
-            }
-
-            if (root.hasNetworkHadSuccessfulConnection(modelData)) {
-                return `U ${modelData.name}`;
-            } else if (modelData.security == WifiSecurityType.Open) {
-                return `  ${modelData.name}`;
-            } else {
-                return ` ${modelData.name}`;
-            }
-        }
+        text: modelData && modelData.name
         connected: (modelData && modelData.connected)
         changing: (modelData && modelData.stateChanging)
         onClicked: (modelData && modelData.connected) ? modelData.disconnect() : modelData.connect()

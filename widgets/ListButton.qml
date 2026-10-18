@@ -7,19 +7,21 @@ Rectangle {
     id: root
 
     property string text: ""
+
+    property string textIcon: ""
     property url iconUrl: ""
     property real iconSize: 0
+    property real iconSpacing: 8
 
     property int pixelSize: Theme.controlPanelFontSize
     property string family: Theme.controlPanelFontFamily
     property color textColor: Theme.foreground
 
     property bool connected: false
-    // True while connecting, disconnecting or otherwise busy. Clicks are ignored
-    // until it finishes.
     property bool changing: false
-    // Whether to show the status dot before the label.
     property bool showStatus: true
+
+    property bool statusVisible: root.showStatus && (root.connected || root.changing)
 
     signal clicked()
 
@@ -35,13 +37,12 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 8 * Theme.controlPanelScale
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 8 * Theme.controlPanelScale
+        spacing: (statusVisible ? 8 : iconSpacing) * Theme.controlPanelScale
 
-        // Connected, busy, or neither.
         Rectangle {
             id: buttonStatus
 
-            visible: root.showStatus && (root.connected || root.changing)
+            visible: statusVisible
             anchors.verticalCenter: parent.verticalCenter
             width: 8 * Theme.controlPanelScale
             height: 8 * Theme.controlPanelScale
@@ -62,9 +63,18 @@ Rectangle {
         }
 
         BarText {
+            width: root.iconSize * Theme.controlPanelScale
+            visible: root.iconUrl == "" && root.textIcon != ""
+            text: root.textIcon
+            color: root.textColor
+            font.pixelSize: root.pixelSize
+            font.family: root.family
+        }
+
+        BarText {
             width: root.width
                 - 2 * buttonRow.anchors.leftMargin
-                - (root.showStatus ? buttonStatus.width + buttonRow.spacing : 0)
+                - (statusVisible ? buttonStatus.width + buttonRow.spacing : 0)
             text: root.text
             color: root.textColor
             font.pixelSize: root.pixelSize
