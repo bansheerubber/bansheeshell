@@ -6,6 +6,7 @@ import ".."
 
 RowLayout {
     id: root
+    visible: battery.ready && battery.isLaptopBattery
 
     readonly property UPowerDevice battery: UPower.displayDevice
     readonly property bool charging: battery.state === UPowerDeviceState.Charging
@@ -28,7 +29,6 @@ RowLayout {
             anchors.rightMargin: -50
         }
 
-        visible: battery.ready && battery.isLaptopBattery
         text: `${changeRate}${Math.round(battery.percentage * 100)}%`
         color: !charging && battery.percentage < 0.15 ? Theme.urgent : Theme.foreground
     }

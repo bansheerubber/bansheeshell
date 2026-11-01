@@ -4,6 +4,7 @@ import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtMultimedia
 import ".."
 
 // Audio devices in two sections, outputs then inputs. The dot and highlight
@@ -89,6 +90,26 @@ Flickable {
         onTriggered: availability.running = true
     }
 
+    SoundEffect {
+        id: clickSound
+        source: "../audio/audio-volume-change.oga"
+        volume: 1.0
+
+        property double lastPlay: 0
+        property double playInterval: 100
+    }
+
+    Timer {
+        id: lastClickSound
+        interval: clickSound.playInterval
+        repeat: false
+        
+        onTriggered: {
+            clickSound.play();
+            clickSound.lastPlay = Date.now();
+        }
+    }
+
     clip: true
     contentHeight: sections.implicitHeight
     boundsBehavior: Flickable.StopAtBounds
@@ -113,7 +134,18 @@ Flickable {
 
             ControlCenterSlider {
                 value: sink && sink.audio ? sink.audio.volume : 0
-                onChange: (percent) => sink.audio.volume = percent
+                onChange: (percent) => {
+                    sink.audio.volume = percent;
+
+                    const currentTime = Date.now();
+                    if (currentTime - clickSound.lastPlay > clickSound.playInterval) {
+                        clickSound.play();
+                        clickSound.lastPlay = currentTime;
+                    }
+
+                    lastClickSound.stop();
+                    lastClickSound.start();
+                }
             }
         }
 
